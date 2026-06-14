@@ -15,6 +15,7 @@ public class TaskSheetItem {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(nullable = false)

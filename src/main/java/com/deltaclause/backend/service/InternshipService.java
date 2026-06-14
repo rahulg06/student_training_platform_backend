@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +18,23 @@ public class InternshipService {
 
     private final InternshipRepository internshipRepository;
 
+//    @Cacheable(value = "internships", key = "'all_listings'")
+//    public List<Internship> getAllInternships() {
+//        System.out.println("[Redis Cache Miss] Pulling all active trainings from MySQL database...");
+//        return internshipRepository.findAll();
+//    }
     @Cacheable(value = "internships", key = "'all_listings'")
     public List<Internship> getAllInternships() {
-        System.out.println("[Redis Cache Miss] Pulling all active trainings from MySQL database...");
-        return internshipRepository.findAll();
-    }
 
+        List<Internship> internships = internshipRepository.findAll();
+
+        internships.forEach(i -> {
+            i.setDomains(new ArrayList<>(i.getDomains()));
+            i.setTaskSheets(new ArrayList<>(i.getTaskSheets()));
+        });
+
+        return internships;
+    }
     @CacheEvict(value = "internships", allEntries = true)
     public Internship createInternship(Internship internship) {
         // Automatically set the ID if not provided

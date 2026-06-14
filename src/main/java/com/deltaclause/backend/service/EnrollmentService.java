@@ -203,7 +203,7 @@ public class EnrollmentService {
 
             // Create cryptographically signed certificate hash
             String random=UUID.randomUUID().toString();
-            String sign = random.replace("-", "").substring(0, Math.min(random.length(), 48));
+            String sign = random.replace("-", "");
 
             Certificate cert = Certificate.builder()
                     .id(genCertId)

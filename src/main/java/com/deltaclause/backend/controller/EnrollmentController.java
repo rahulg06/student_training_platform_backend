@@ -21,7 +21,7 @@ public class EnrollmentController {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
             Enrollment enrollment = enrollmentService.apply(email, req);
-            return ResponseEntity.status(21).body(enrollment);
+            return ResponseEntity.status(201).body(enrollment);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(java.util.Collections.singletonMap("error", e.getMessage()));
         }

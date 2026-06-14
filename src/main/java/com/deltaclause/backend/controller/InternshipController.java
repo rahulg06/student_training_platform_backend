@@ -23,7 +23,7 @@ public class InternshipController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Internship> create(@RequestBody Internship internship) {
-        return ResponseEntity.status(21).body(internshipService.createInternship(internship));
+        return ResponseEntity.status(201).body(internshipService.createInternship(internship));
     }
 
     @PutMapping("/{id}")
